@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/reservation.dart';
 
 class ApiService {
-  final String baseUrl = 'http://your-api-url.com/api';
+  final String baseUrl = 'http://13.38.118.50/api';
 
   Future<List<Reservation>> getReservations(String token) async {
     final response = await http.get(
