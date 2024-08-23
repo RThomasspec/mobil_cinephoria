@@ -19,13 +19,24 @@ class _ReservationScreenState extends State<ReservationScreen> {
     _loadReservations();
   }
 
-  void _loadReservations() async {
-    final storage = FlutterSecureStorage();
-    final token = await storage.read(key: 'token');
+ void _loadReservations() async {
+  final storage = FlutterSecureStorage();
+  final utilisateurId = await storage.read(key: 'utilisateur_id'); // On récupère l'utilisateur_id
+
+  if (utilisateurId != null) {
+    // Assurez-vous que utilisateurId est bien un entier et non null
+    final reservationsData = await apiService.getReservations(int.parse(utilisateurId));
+
+    // Mettez à jour l'état une fois les données récupérées
     setState(() {
-      reservations = apiService.getReservations(token!);
+      reservations = reservationsData;
     });
+  } else {
+    // Gérer le cas où l'utilisateur_id est null
+    print("utilisateur_id is null");
   }
+}
+
 
   Future<void> _generateQrCode(String reservationId) async {
     try {

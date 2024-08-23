@@ -5,10 +5,11 @@ import '../models/reservation.dart';
 class ApiService {
   final String baseUrl = 'http://13.38.118.50/api';
 
-  Future<List<Reservation>> getReservations(String token) async {
-    final response = await http.get(
+  Future<List<Reservation>> getReservations(int utilisateurId) async {
+    final response = await http.post(
       Uri.parse('$baseUrl/reservations'),
-      headers: {'Authorization': 'Bearer $token'},
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'utilisateur_id': utilisateurId}),
     );
 
     if (response.statusCode == 200) {
@@ -18,6 +19,8 @@ class ApiService {
       throw Exception('Failed to load reservations');
     }
   }
+
+
 
   Future<Map<String, dynamic>> apilogin(String email, String password) async {
     final response = await http.post(
