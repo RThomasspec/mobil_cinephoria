@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../services/api_service.dart';
+import 'reservation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,12 +11,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final ApiService _apiService = ApiService();
+
   final _storage = FlutterSecureStorage();
 
 Future<void> _login() async {
   final email = _emailController.text.trim();
   final password = _passwordController.text.trim();
+  
 
   if (email.isEmpty || password.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -25,12 +27,21 @@ Future<void> _login() async {
   } 
 
   try {
-    final response = await _apiService.apilogin(email, password);
+      final apiService = ApiService();
+    final response = await apiService.apilogin(email, password);
 
     if (response.containsKey('token')) {
       // Store the token securely
       await _storage.write(key: 'token', value: response['token']);
-      Navigator.pushReplacementNamed(context, '/reservations');
+      await _storage.write(key: 'utilisateur_id', value: response['utilisateur_id'].toString());
+      String utilisateurId = response['utilisateur_id'].toString();
+Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+    builder: (context) => ReservationScreen(utilisateurId: utilisateurId),
+  ),
+);
+   
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login failed: ${response['error']}')),
@@ -41,6 +52,8 @@ Future<void> _login() async {
       SnackBar(content: Text('Login failed: $e')),
     );
   }
+
+  
 }
 
 

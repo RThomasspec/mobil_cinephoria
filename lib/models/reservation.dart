@@ -1,7 +1,7 @@
 class Reservation {
   final int idReservation;
   final String film;
-  final String affiche;
+  final String idImage;
   final String jour;
   final String salle;
   final String debut;
@@ -11,7 +11,7 @@ class Reservation {
   Reservation({
     required this.idReservation,
     required this.film,
-    required this.affiche,
+    required this.idImage,
     required this.jour,
     required this.salle,
     required this.debut,
@@ -19,16 +19,17 @@ class Reservation {
     required this.nbPlacesReserve,
   });
 
-  factory Reservation.fromJson(Map<String, dynamic> json) {
+    factory Reservation.fromJson(Map<String, dynamic> json) {
     return Reservation(
-      idReservation: json['idReservation'],
-      film: json['film'],
-      affiche: json['affiche'],
-      jour: json['jour'],
-      salle: json['salle'],
-      debut: json['debut'],
-      fin: json['fin'],
-      nbPlacesReserve: json['nbPlacesReserve'],
+      idReservation: json['idReservation'] ?? 0,
+      film: json['film'] ?? '',
+      idImage: json['idImage'] ?? '',  
+      jour: json['jour'] ?? '',
+      salle: json['salle'] ?? '',
+      debut: json['debut'] ?? '',
+      fin: json['fin'] ?? '',
+      nbPlacesReserve: json['nbPlacesReserve'] ?? 0,
     );
   }
+
 }

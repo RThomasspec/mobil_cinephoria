@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../screens/login_screen.dart';
 import '../screens/reservation_screen.dart';
+import '../screens/QRCodeScreen.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -17,7 +19,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginScreen(),
-        '/reservations': (context) => ReservationScreen(),
+    
+
       },
     );
   }
