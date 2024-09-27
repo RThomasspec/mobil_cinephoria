@@ -51,7 +51,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     itemCount: reservations.length,
                     itemBuilder: (context, index) {
                       final reservation = reservations[index];
-                      String imageUrl = 'http://127.0.0.1:8000/uploads/images/${reservation.idImage}';
+                      String imageUrl = 'http://13.38.118.50/uploads/images/${reservation.idImage}';
                       print(imageUrl);
                       return ListTile(
                         leading: Image.network(
